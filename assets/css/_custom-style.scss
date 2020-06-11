@@ -1,0 +1,1337 @@
+// --------------------------------
+
+// Custom Style - your bespoke style
+/* --------------------------------
+
+File#: _1_header
+Title: Main Header
+Descr: Accessible website navigation
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+:root {
+  --header-height: 50px;
+
+  @include breakpoint(md) {
+    --header-height: 70px;
+  }
+}
+
+.header {
+  height: var(--header-height);
+  width: 100%;
+  background-color: var(--color-bg);
+  z-index: var(--zindex-header);
+}
+
+.header--expanded {
+  // class added when navigation is visible - small devices only
+}
+
+.header__container {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// logo
+.header__logo {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+
+  a, svg, img {
+    display: block;
+  }
+}
+
+// nav
+.header__nav {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-height: 100vh;
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-md);
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  font-size: 1.25em; // controls the font-size of all elements (sm)
+
+  display: none;
+
+  &::before { // top header bg + border
+    content: '';
+    display: block;
+    position: sticky;
+    top: 0;
+    height: var(--header-height);
+    background: inherit;
+    border-bottom: 1px solid var(--color-contrast-low);
+  }
+}
+
+.header__nav--is-visible {
+  display: block;
+}
+
+.header__nav-inner {
+  padding: var(--space-sm) var(--component-padding) var(--component-padding);
+}
+
+.header__label { // menu label
+  font-size: var(--text-sm);
+  color: var(--color-contrast-medium);
+  margin-bottom: var(--space-sm);
+}
+
+.header__item { // nav list item
+  margin-bottom: var(--space-sm);
+}
+
+.header__link { // link within list item
+  color: var(--color-contrast-higher);
+  text-decoration: none;
+
+  &:hover, &[aria-current] { // style of :hover + selected link
+    color: var(--color-primary);
+  }
+}
+
+.header__item--divider { // element used to separate nav items
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-contrast-low);
+}
+
+// menu trigger
+.header__trigger { // menu button
+  position: relative;
+  z-index: 2;
+}
+
+// menu icon
+.header__trigger-icon {
+  position: relative;
+  display: block;
+  height: 2px;
+  width: 1em;
+  background-color: currentColor;
+  margin-right: var(--space-xxs);
+  transition: 0.2s;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: inherit;
+    height: inherit;
+    background-color: currentColor;
+    transition: 0.2s;
+  }
+
+  &::before {
+    transform: translateY(-5px);
+  }
+
+  &::after {
+    transform: translateY(5px);
+  }
+}
+
+.header__trigger[aria-expanded="true"] .header__trigger-icon {
+  background-color: transparent;
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+@include breakpoint(md) {
+  .header__nav {
+    // reset
+    position: static;
+    background-color: transparent;
+    width: auto;
+    max-height: none;
+    box-shadow: none;
+    overflow: visible;
+    overscroll-behavior: auto;
+    display: block;
+
+    font-size: 0.875em; // controls the font-size of all elements (md)
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .header__nav-inner {
+    padding: 0; // reset
+  }
+
+  .header__label { // hide label
+    @include srHide;
+  }
+
+  .header__list {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__item {
+    display: inline-block; // flex fallback
+    margin-bottom: 0;
+    margin-left: var(--space-md);
+  }
+
+  .header__item--divider {
+    height: 1em;
+    width: 1px;
+  }
+
+  .header__trigger {
+    display: none;
+  }
+}
+
+// no JS fallback
+html:not(.js) {
+  .header {
+    height: auto;
+    padding-top: var(--space-xs);
+  }
+
+  .header__trigger {
+    display: none;
+  }
+
+  .header__container {
+    display: block;
+  }
+
+  .header__nav {
+    position: static;
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: block;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .header__nav-inner {
+    position: static;
+    height: auto;
+    padding: var(--space-md) 0;
+    overflow: visible;
+  }
+
+  @include breakpoint(md) {
+    .header {
+      height: var(--header-height);
+      padding: 0;
+    }
+
+    .header__container {
+      display: flex;
+    }
+  }
+}
+.newsletter-card {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--component-padding);
+  text-align: center;
+}
+
+.newsletter-card__inner { // set max-width for the content
+  max-width: var(--max-width-xxs);
+  margin: auto;
+}
+
+.newsletter-card__icon {
+  font-size: 2.4em; // icon size
+  color: inherit; // icon color
+}
+
+.newsletter-card__feedback {
+  font-size: var(--text-sm);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  // hide
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+}
+
+.newsletter-card__feedback--is-visible {
+  // show
+  position: relative;
+  clip: auto;
+  clip-path: none;
+}
+
+.newsletter-card__feedback--success {
+  background-color: alpha(var(--color-success), 0.2);
+}
+
+.newsletter-card__feedback--error {
+  background-color: alpha(var(--color-error), 0.2);
+}
+
+.newsletter-card__feedback--warning {
+  background-color: alpha(var(--color-warning), 0.2);
+}
+
+.hero {
+  // if bg = img
+  background-image: url('../images/bg-yatch.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+// --overlay-layer
+.hero--overlay-layer {
+  &::after { // add a layer in between the img/video background and the content
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: alpha(var(--color-bg), 0.65);
+    z-index: 1;
+  }
+}
+/* --------------------------------
+
+File#: _1_main-footer
+Title: Main Footer
+Descr: Footer navigation
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.main-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.main-footer__logo {
+  flex-shrink: 0;
+  width: 104px; // logo width
+  height: 30px; // logo height
+  display: block;
+
+  svg, img {
+    display: block;
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.main-footer__item {
+  margin-top: var(--space-xs);
+}
+
+.main-footer__link {
+  color: var(--color-contrast-medium);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-contrast-high);
+  }
+}
+
+// colophon
+.main-footer__colophon {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.main-footer__social {
+  text-decoration: none;
+  display: inline-block;
+  color: var(--color-contrast-medium);
+
+  &:hover {
+    color: var(--color-contrast-high);
+  }
+}
+
+@include breakpoint(md) {
+  .main-footer__legend {
+    font-size: var(--text-base);
+  }
+
+  .main-footer__item {
+    font-size: 0.9em;
+  }
+}
+.google-maps {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; // set 16:9 aspect ratio
+}
+
+.google-maps--ratio-4\:1 {
+  padding-bottom: 25%;
+}
+
+.google-maps--ratio-3\:1 {
+  padding-bottom: 33%;
+}
+.card {
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.card__img {
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.card__content {
+  padding: var(--space-xs);
+}
+
+// --link
+.card--is-link {
+  will-change: box-shadow;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+
+    .card__img::after {
+      opacity: 1;
+    }
+  }
+
+  .card__img {
+    position: relative;
+
+    &::after { // overlay layer
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: alpha(var(--color-black), 0.6);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+}
+
+.card__link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.card__link-icon {
+  position: absolute;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+  background-color: alpha(var(--color-white), 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  .icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: var(--color-black); // icon color
+  }
+}
+
+.card--is-link:hover .card__link-icon {
+  opacity: 1;
+}
+/* --------------------------------
+
+File#: _1_sub-navigation
+Title: Sub Navigation
+Descr: Secondary navigation template
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.subnav {}
+
+.subnav__nav {
+  position: relative;
+  display: flex;
+
+  &::after { // shadow overlay indicating scrolling
+    content: '';
+    width: 1em;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(to right, alpha(var(--color-contrast-lower), 0), alpha(var(--color-contrast-lower), 1));
+    pointer-events: none;
+  }
+}
+
+.subnav__list {
+  display: flex;
+  overflow: auto;
+}
+
+.subnav__item {
+  display: inline-block; // fallback
+  flex-shrink: 0;
+}
+
+.subnav__link {
+  display: block;
+  font-size: var(--text-sm);
+  padding: var(--space-md);
+  text-decoration: none;
+  color: alpha(var(--color-contrast-high), 0.65);
+  border: 3px solid transparent; // border-width
+  border-right-width: 0;
+  border-left-width: 0;
+
+  &:hover {
+    color: var(--color-contrast-high);
+  }
+
+  &[aria-current="page"] {
+    border-bottom-color: var(--color-primary); // border color
+    color: var(--color-contrast-high);
+  }
+}
+
+// --collapsed
+.subnav:not(.subnav--collapsed) {
+  .subnav__control, .subnav__close-btn {
+    display: none; // hide buttons if nav = expanded
+  }
+}
+
+.subnav--collapsed {
+  display: inline-block;
+
+  .subnav__wrapper {
+    position: fixed;
+    display: block;
+    z-index: var(--zindex-overlay);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: alpha(var(--color-contrast-higher), 0.9);
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .subnav__wrapper--is-visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .3s;
+
+    .subnav__nav {
+      transform: translateY(0);
+      transition: transform .3s;
+    }
+  }
+
+  .subnav__nav {
+    display: block;
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-md);
+    max-height: 100%;
+    overflow: auto;
+    transform: translateY(-1em);
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .subnav__list {
+    flex-direction: column;
+    overflow: visible;
+    padding: 0 var(--space-md) var(--space-md);
+  }
+
+  .subnav__link {
+    border-width: 0;
+    font-size: var(--text-md);
+    padding: var(--space-xs) 0;
+
+    &[aria-current="page"] {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.subnav__close-btn {
+  display: flex;
+  margin: var(--space-xs) var(--space-xs) 0 auto;
+  width: 2em;
+  height: 2em;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+  transition: .2s;
+
+  &:hover {
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .icon {
+    display: block;
+    color: var(--color-contrast-high);
+  }
+}
+
+// used in JS - detect when the subnav needs to switch from an expanded layout to a collapsed one
+[class*="subnav--expanded"]::before {
+  display: none;
+  content: 'collapsed';
+}
+
+@each $breakpoint, $value in $breakpoints {
+  @include breakpoint(#{$breakpoint}) {
+    .subnav--expanded\@#{$breakpoint}::before {
+      content: 'expanded';
+    }
+  }
+}
+/* --------------------------------
+
+File#: _2_tabs-v3
+Title: Tabs v3
+Descr: Accessible tabbed content v3
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+:root {
+  --tabs-v3-border-width: 2px;
+  --tabs-v3-radius: 0.25em;
+  --tabs-v3-control-gap: 0;
+  --tabs-v3-control-radius: 0;
+}
+
+.tabs-v3 {
+  border: var(--tabs-v3-border-width) solid var(--color-contrast-low);
+  padding: var(--component-padding);
+  border-radius: var(--tabs-v3-radius);
+  background-color: var(--color-bg);
+}
+
+.tabs-v3__controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xs);
+
+  li {
+    display: inline-block; // flex fallback
+    margin: 0 var(--space-xs) var(--space-xs) 0;
+  }
+}
+
+.tabs-v3__control {
+  display: inline-flex;
+  background-color: var(--color-contrast-low);
+  padding: var(--space-xs) var(--space-sm);
+  white-space: nowrap;
+  color: inherit;
+  border-radius: var(--tabs-v3-control-radius);
+
+  &:hover {
+    background-color: var(--color-contrast-lower);
+  }
+}
+
+.tabs-v3__panel {
+  margin-bottom: var(--space-md);
+}
+
+.js {
+  .tabs-v3__control {
+    text-decoration: none;
+
+    &[aria-selected="true"] {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      @include fontSmooth;
+
+      &:hover {
+        background-color: var(--color-primary-light);
+      }
+    }
+  }
+
+  .tabs-v3__panel {
+    margin-bottom: 0;
+  }
+
+  @include breakpoint(md) {
+    .tabs-v3 {
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
+
+    .tabs-v3__controls {
+      margin-bottom: 0;
+
+      li {
+        margin-top: 0;
+        margin-left: calc(-1 * var(--tabs-v3-border-width));
+        margin-right: var(--tabs-v3-control-gap);
+        margin-bottom: 0;
+      }
+
+      li:first-child {
+        margin-left: 0;
+      }
+
+      li:first-child a {
+        border-radius: var(--tabs-v3-radius) var(--tabs-v3-control-radius) 0 0;
+      }
+
+      li:last-child a {
+        border-radius: var(--tabs-v3-control-radius) var(--tabs-v3-radius) 0 0;
+      }
+    }
+
+    .tabs-v3__control {
+      height: 100%;
+      border: var(--tabs-v3-border-width) solid transparent;
+      border-bottom-width: 0;
+      border-radius: var(--tabs-v3-control-radius) var(--tabs-v3-control-radius) 0 0;
+
+      &[aria-selected="true"] {
+        background-color: var(--color-bg);
+        color: var(--color-primary);
+        position: relative;
+        border-color: var(--color-contrast-low);
+
+        &:hover {
+          background-color: inherit;
+        }
+
+        &::after { // border bottom -> it covers the border of the panel element
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: calc(-1 * var(--tabs-v3-border-width));
+          width: 100%;
+          height: var(--tabs-v3-border-width);
+          background-color: var(--color-bg);
+          z-index: 1;
+        }
+      }
+    }
+
+    .tabs-v3__panels {
+      border: var(--tabs-v3-border-width) solid var(--color-contrast-low);
+      border-radius: 0 var(--tabs-v3-radius) var(--tabs-v3-radius) var(--tabs-v3-radius);
+      background-color: var(--color-bg);
+    }
+
+    .tabs-v3__panel {
+      padding: var(--space-sm);
+    }
+  }
+}
+.tabs {}
+
+.tabs__control {
+  text-decoration: none;
+  color: var(--color-contrast-medium);
+
+  &:focus {
+    outline: 2px solid alpha(var(--color-primary), 0.2);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    color: var(--color-contrast-high);
+  }
+}
+
+.js {
+  .tabs__control[aria-selected="true"] {
+    color: var(--color-contrast-high);
+    text-decoration: underline;
+  }
+}
+.full-height {
+  height: 100%;
+  width: 100%;
+}
+.nope{
+  text-align: center;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* --------------------------------
+
+File#: _1_card-v2
+Title: Card v2
+Descr: Container of information used as teasers for further content, often displayed in a gallery of related items
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.card-v2 {
+  position: relative;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.card-v2__caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(alpha(var(--color-black), 0), alpha(var(--color-black), 1));
+  background-blend-mode: multiply;
+
+  color: var(--color-white);
+  text-shadow: 0 1px 1px rgba(#000, 0.35);
+  @include fontSmooth;
+}
+
+// --blurred-img
+.card-v2--blur-fx {
+  .card-v2__caption {
+    background: alpha(var(--color-black), 0.8);
+    backdrop-filter: blur(10px);
+  }
+}
+
+// --link
+a.card-v2 {
+  display: block;
+  text-decoration: none;
+  transition: box-shadow .2s;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+/* --------------------------------
+
+File#: _2_slideshow
+Title: Slideshow
+Descr: Show a collection of items one at a time
+Usage: codyhouse.co/license
+
+-------------------------------- */
+:root {
+  --slideshow-height: 280px;
+
+  // transitions
+  --slideshow-fade-transition-duration: 0.25s; // fade effect transition duration
+  --slideshow-slide-transition-duration: 0.35s; // slide effect transition duration
+  --slideshow-prx-transition-duration: 0.5s; // parallax effect transition duration
+
+  // controls
+  --slideshow-btn-width: 1.6em;
+  --slideshow-btn-height: 3.2em;
+  --slideshow-btn-icon-size: 1.6em;
+  --slideshow-btn-offset: var(--space-xs); // gap between button and slideshow edges
+
+  @include breakpoint(sm) {
+    --slideshow-height: 380px;
+  }
+
+  @include breakpoint(md) {
+    --slideshow-height: 480px;
+  }
+
+  @include breakpoint(lg) {
+    --slideshow-height: 580px;
+  }
+}
+
+// slide
+.slideshow__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slideshow-height);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// set a fixed ratio for the slides
+.slideshow--ratio-16\:9 .slideshow__item {
+  height: 0;
+  padding-bottom: 56.25%; // 16:9 aspect ratio
+}
+
+.slideshow--ratio-4\:3 .slideshow__item {
+  height: 0;
+  padding-bottom: 75%; // 4:3 aspect ratio
+}
+
+.slideshow--ratio-1\:1 .slideshow__item {
+  height: 0;
+  padding-bottom: 100%; // 1:1 aspect ratio
+}
+
+// slideshow basic style
+.js {
+  .slideshow {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .slideshow__content {
+    overflow: hidden;
+  }
+
+  .slideshow__item {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    visibility: hidden;
+  }
+
+  .slideshow__item--selected {
+    position: relative;
+    z-index: 3;
+    visibility: visible;
+  }
+}
+
+// fade-in animation
+.js {
+  .slideshow--transition-fade .slideshow__item {
+    opacity: 0;
+    transition: opacity 0s var(--slideshow-fade-transition-duration), visibility 0s var(--slideshow-fade-transition-duration);
+  }
+
+  .slideshow--transition-fade .slideshow__item--selected {
+    opacity: 1;
+    transition: opacity var(--slideshow-fade-transition-duration);
+  }
+}
+
+// slide-in animation
+.js {
+  .slideshow--transition-slide .slideshow__item {
+    animation-duration: var(--slideshow-slide-transition-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+
+    > * { // hide content of not-visible items so that they are not focusable
+      visibility: hidden;
+    }
+  }
+
+  .slideshow--transition-slide .slideshow__item--selected > * { // show content of selected item
+    visibility: visible;
+  }
+
+  .slideshow--transition-slide .slideshow__item--slide-in-left { // visible item - enter from left to right
+    animation-name: slide-in-left;
+  }
+
+  .slideshow--transition-slide .slideshow__item--slide-in-right { // visible item - enter from right to left
+    animation-name: slide-in-right;
+  }
+
+  .slideshow--transition-slide .slideshow__item--slide-out-left { // leaving item - leave from left to right
+    animation-name: slide-out-left;
+  }
+
+  .slideshow--transition-slide .slideshow__item--slide-out-right { // leaving item - leave from right to left
+    animation-name: slide-out-right;
+  }
+
+  .slideshow--transition-slide .slideshow__item--slide-out-left,
+  .slideshow--transition-slide .slideshow__item--slide-out-right {
+    z-index: 2;
+
+    &.slideshow__item--selected {
+      z-index: 3; // fix bug on browsers not supporting CSS animations
+    }
+
+    > * {
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    visibility: visible;
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    visibility: visible;
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+// parallax animation
+.js {
+  .slideshow--transition-prx .slideshow__item {
+    animation-duration: var(--slideshow-prx-transition-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+
+    > * { // hide content of not-visible items so that they are not focusable
+      visibility: hidden;
+    }
+  }
+
+  .slideshow--transition-prx .slideshow__item--selected > * { // show content of selected item
+    visibility: visible;
+  }
+
+  .slideshow--transition-prx .slideshow__item--prx-in-left { // visible item - enter from left to right
+    animation-name: prx-in-left;
+  }
+
+  .slideshow--transition-prx .slideshow__item--prx-in-right { // visible item - enter from right to left
+    animation-name: prx-in-right;
+  }
+
+  .slideshow--transition-prx .slideshow__item--prx-out-left { // leaving item - leave from left to right
+    animation-name: prx-out-left;
+  }
+
+  .slideshow--transition-prx .slideshow__item--prx-out-right { // leaving item - leave from right to left
+    animation-name: prx-out-right;
+  }
+
+  .slideshow--transition-prx .slideshow__item--prx-out-left,
+  .slideshow--transition-prx .slideshow__item--prx-out-right {
+    z-index: 2;
+
+    &.slideshow__item--selected {
+      z-index: 3; // fix bug on browsers not supporting CSS animations
+    }
+
+    > * {
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes prx-in-left {
+  0% {
+    visibility: visible;
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes prx-in-right {
+  0% {
+    visibility: visible;
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes prx-out-left {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateX(40%);
+  }
+}
+
+@keyframes prx-out-right {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateX(-40%);
+  }
+}
+
+
+// touch swipe enabled
+.js .slideshow[data-swipe="on"] .slideshow__content {
+  user-select: none;
+
+  img {
+    pointer-events: none;
+  }
+}
+
+// slideshow arrow controls
+.slideshow__control {
+  display: none;
+}
+
+.js {
+  .slideshow[data-controls="hover"] .slideshow__control {
+    opacity: 0; // hide arrows
+    transition: opacity .3s;
+  }
+
+  .slideshow[data-controls="hover"]:hover .slideshow__control {
+    opacity: 1; // show arrows on hover
+  }
+
+  .slideshow[data-swipe="on"] .slideshow__control {
+    display: none; // hide arrows on mobile if swipe is enabled
+  }
+
+  .slideshow__control {
+    display: block;
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:first-of-type {
+      left: var(--slideshow-btn-offset);
+    }
+
+    &:last-of-type {
+      right: var(--slideshow-btn-offset);
+    }
+  }
+
+  @include breakpoint(md) {
+    .slideshow[data-swipe="on"] .slideshow__control {
+      display: block; // show arrow controls
+    }
+  }
+}
+
+.slideshow__btn {
+  display: block;
+  background-color: alpha(var(--color-black), 0.75); // IE fallback
+  height: var(--slideshow-btn-height);
+  width: var(--slideshow-btn-width);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background .2s, transform 0.2s;
+
+  &:hover {
+    background-color: alpha(var(--color-contrast-higher), 0.85);
+
+    .icon {
+      color: var(--color-bg);
+    }
+  }
+
+  .slideshow:not(.slideshow--is-animating) &:active { // active effect
+    transform: translateY(2px);
+  }
+
+  .icon {
+    display: block;
+    width: var(--slideshow-btn-icon-size);
+    height: var(--slideshow-btn-icon-size);
+    margin: 0 auto;
+    transition: color .2s;
+    color: var(--color-white); // IE fallback
+  }
+
+  @supports (grid-area: auto) {
+    background-color: transparent; // button color
+
+    .icon {
+      color: var(--color-contrast-higher); // icon color
+    }
+  }
+}
+
+// slideshow navigation
+.slideshow__navigation { // created in JS
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.slideshow__nav-item {
+  display: inline-block; // flex fallback
+  margin: 0 var(--space-xxxs);
+
+  button { // dot
+    display: block;
+    position: relative;
+    font-size: 8px; // dot size
+    color: var(--color-contrast-high); // dot color
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: background .3s;
+
+    &::before { // focus circle
+      content: '';
+      position: absolute;
+      top: calc(50% - 0.5em);
+      left: calc(50% - 0.5em);
+      height: 1em;
+      width: 1em;
+      font-size: 14px;
+      border-radius: inherit;
+      border: 1px solid var(--color-contrast-high);
+      opacity: 0;
+      transform: scale(0);
+      transition: 0.3s;
+    }
+
+    &:focus {
+      outline: none;
+
+      &::before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.slideshow__nav-item--selected button {
+  opacity: 1;
+}
+
+@include breakpoint(md) {
+  .slideshow__navigation {
+    height: 40px;
+  }
+
+  .slideshow__nav-item {
+    button {
+      font-size: 10px; // dot size
+
+      &::before { // focus circle
+        font-size: 16px;
+      }
+    }
+  }
+}
+/* --------------------------------
+
+File#: N/A
+Title: Swipe Content
+Descr: A Vanilla JavaScript plugin to detect touch interactions
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.swipe-content { // demo
+  height: 280px;
+  width: 280px;
+  background-color: var(--color-contrast-low);
+  border-radius: var(--radius-md);
+  cursor: default;
+  transition: background 0.2s;
+
+  &:active {
+    background-color: var(--color-contrast-medium);
+  }
+}
+// --------------------------------
+
+@import 'custom-style/colors';
+@import 'custom-style/spacing';
+@import 'custom-style/shared-styles';
+@import 'custom-style/typography';
+@import 'custom-style/icons';
+@import 'custom-style/buttons';
+@import 'custom-style/forms';
